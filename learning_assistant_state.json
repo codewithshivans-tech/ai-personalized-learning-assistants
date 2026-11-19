@@ -1,0 +1,240 @@
+{
+  "last_updated": "2026-11-19 16:04:36",
+  "student_profiles": {
+    "S001": {
+      "completed_content": [
+        "python_basics",
+        "data_analysis_pandas"
+      ],
+      "scores": [
+        85,
+        90
+      ],
+      "progress": 25.0,
+      "points": 300,
+      "badges": [
+        "First Step Badge",
+        "Mastery Star Badge",
+        "Streak & XP Champion"
+      ],
+      "adaptation_log": [
+        {
+          "timestamp": "2026-11-19 16:04:36",
+          "content_id": "python_basics",
+          "score": 85,
+          "xp_earned": 150,
+          "adaptation": "Maintained current difficulty & pace"
+        },
+        {
+          "timestamp": "2026-11-19 16:04:36",
+          "content_id": "data_analysis_pandas",
+          "score": 90,
+          "xp_earned": 150,
+          "adaptation": "Level Up: Promoted from Intermediate to Advanced"
+        }
+      ]
+    }
+  },
+  "students_snapshot": [
+    {
+      "student_id": "S001",
+      "name": "Student 1",
+      "learning_style": "Kinesthetic",
+      "skill_level": "Advanced",
+      "learning_pace": "Fast",
+      "completed_courses": 2,
+      "avg_score": 87.5,
+      "engagement": 92
+    },
+    {
+      "student_id": "S002",
+      "name": "Student 2",
+      "learning_style": "Reading/Writing",
+      "skill_level": "Beginner",
+      "learning_pace": "Medium",
+      "completed_courses": 3,
+      "avg_score": 81.0,
+      "engagement": 53
+    },
+    {
+      "student_id": "S003",
+      "name": "Student 3",
+      "learning_style": "Visual",
+      "skill_level": "Intermediate",
+      "learning_pace": "Fast",
+      "completed_courses": 3,
+      "avg_score": 43.0,
+      "engagement": 55
+    },
+    {
+      "student_id": "S004",
+      "name": "Student 4",
+      "learning_style": "Kinesthetic",
+      "skill_level": "Intermediate",
+      "learning_pace": "Fast",
+      "completed_courses": 6,
+      "avg_score": 93.0,
+      "engagement": 89
+    },
+    {
+      "student_id": "S005",
+      "name": "Student 5",
+      "learning_style": "Kinesthetic",
+      "skill_level": "Intermediate",
+      "learning_pace": "Slow",
+      "completed_courses": 3,
+      "avg_score": 68.0,
+      "engagement": 70
+    },
+    {
+      "student_id": "S006",
+      "name": "Student 6",
+      "learning_style": "Reading/Writing",
+      "skill_level": "Intermediate",
+      "learning_pace": "Fast",
+      "completed_courses": 6,
+      "avg_score": 57.0,
+      "engagement": 58
+    },
+    {
+      "student_id": "S007",
+      "name": "Student 7",
+      "learning_style": "Visual",
+      "skill_level": "Beginner",
+      "learning_pace": "Slow",
+      "completed_courses": 3,
+      "avg_score": 65.0,
+      "engagement": 44
+    },
+    {
+      "student_id": "S008",
+      "name": "Student 8",
+      "learning_style": "Visual",
+      "skill_level": "Beginner",
+      "learning_pace": "Fast",
+      "completed_courses": 4,
+      "avg_score": 83.0,
+      "engagement": 74
+    },
+    {
+      "student_id": "S009",
+      "name": "Student 9",
+      "learning_style": "Kinesthetic",
+      "skill_level": "Intermediate",
+      "learning_pace": "Fast",
+      "completed_courses": 7,
+      "avg_score": 73.0,
+      "engagement": 94
+    },
+    {
+      "student_id": "S010",
+      "name": "Student 10",
+      "learning_style": "Auditory",
+      "skill_level": "Intermediate",
+      "learning_pace": "Slow",
+      "completed_courses": 6,
+      "avg_score": 49.0,
+      "engagement": 38
+    },
+    {
+      "student_id": "S011",
+      "name": "Student 11",
+      "learning_style": "Kinesthetic",
+      "skill_level": "Beginner",
+      "learning_pace": "Slow",
+      "completed_courses": 2,
+      "avg_score": 75.0,
+      "engagement": 30
+    },
+    {
+      "student_id": "S012",
+      "name": "Student 12",
+      "learning_style": "Kinesthetic",
+      "skill_level": "Beginner",
+      "learning_pace": "Fast",
+      "completed_courses": 5,
+      "avg_score": 53.0,
+      "engagement": 37
+    },
+    {
+      "student_id": "S013",
+      "name": "Student 13",
+      "learning_style": "Kinesthetic",
+      "skill_level": "Beginner",
+      "learning_pace": "Medium",
+      "completed_courses": 0,
+      "avg_score": 70.0,
+      "engagement": 92
+    },
+    {
+      "student_id": "S014",
+      "name": "Student 14",
+      "learning_style": "Kinesthetic",
+      "skill_level": "Advanced",
+      "learning_pace": "Slow",
+      "completed_courses": 3,
+      "avg_score": 87.0,
+      "engagement": 40
+    },
+    {
+      "student_id": "S015",
+      "name": "Student 15",
+      "learning_style": "Reading/Writing",
+      "skill_level": "Advanced",
+      "learning_pace": "Medium",
+      "completed_courses": 1,
+      "avg_score": 54.0,
+      "engagement": 37
+    },
+    {
+      "student_id": "S016",
+      "name": "Student 16",
+      "learning_style": "Visual",
+      "skill_level": "Advanced",
+      "learning_pace": "Medium",
+      "completed_courses": 7,
+      "avg_score": 47.0,
+      "engagement": 64
+    },
+    {
+      "student_id": "S017",
+      "name": "Student 17",
+      "learning_style": "Reading/Writing",
+      "skill_level": "Intermediate",
+      "learning_pace": "Medium",
+      "completed_courses": 3,
+      "avg_score": 53.0,
+      "engagement": 64
+    },
+    {
+      "student_id": "S018",
+      "name": "Student 18",
+      "learning_style": "Reading/Writing",
+      "skill_level": "Advanced",
+      "learning_pace": "Slow",
+      "completed_courses": 1,
+      "avg_score": 62.0,
+      "engagement": 62
+    },
+    {
+      "student_id": "S019",
+      "name": "Student 19",
+      "learning_style": "Reading/Writing",
+      "skill_level": "Intermediate",
+      "learning_pace": "Medium",
+      "completed_courses": 5,
+      "avg_score": 79.0,
+      "engagement": 34
+    },
+    {
+      "student_id": "S020",
+      "name": "Student 20",
+      "learning_style": "Kinesthetic",
+      "skill_level": "Intermediate",
+      "learning_pace": "Slow",
+      "completed_courses": 5,
+      "avg_score": 60.0,
+      "engagement": 70
+    }
+  ]
+}
