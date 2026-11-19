@@ -1,1 +1,341 @@
-{"nbformat":4,"nbformat_minor":0,"metadata":{"colab":{"provenance":[],"authorship_tag":"ABX9TyMvVc9tViaoRY3mozqA2kCw"},"kernelspec":{"name":"python3","display_name":"Python 3"},"language_info":{"name":"python"}},"cells":[{"cell_type":"code","execution_count":1,"metadata":{"colab":{"base_uri":"https://localhost:8080/"},"id":"mjcY1t_YjA1a","executionInfo":{"status":"ok","timestamp":1795104339949,"user_tz":-330,"elapsed":2870,"user":{"displayName":"SHIVANS GUPTA","userId":"15996639449632948565"}},"outputId":"2e666a5b-53c4-4973-dead-c6bb11b53093"},"outputs":[{"output_type":"stream","name":"stdout","text":["Creating Personalized Learning Path for S001...\n","==================================================\n","Student: Student 1\n","Learning Style: Visual\n","Skill Level: Intermediate\n","Estimated Time: 14 hours\n","\n","Learning Path:\n","  1. Python Basics (Difficulty: 1, Duration: 2 hours)\n","  2. Data Analysis with Pandas & NumPy (Difficulty: 1, Duration: 3 hours)\n","  3. Python Intermediate (Difficulty: 2, Duration: 3 hours)\n","  4. Machine Learning Basics (Difficulty: 2, Duration: 3 hours)\n","  5. Natural Language Processing Basics (Difficulty: 2, Duration: 3 hours)\n","\n","Content Recommendations:\n","========================================\n","  - Python Basics (Programming) - 87.0% match\n","  - Deep Learning Basics (Deep Learning) - 87.0% match\n","  - Python Intermediate (Programming) - 80.0% match\n","  - Machine Learning Basics (Machine Learning) - 80.0% match\n","  - Natural Language Processing Basics (NLP) - 80.0% match\n","\n","Tracking Progress & Real-Time Adaptation...\n","Progress: 25.0%\n","Average Score: 87.5%\n","Points & Badges: 300 XP | ['First Step Badge', 'Mastery Star Badge', 'Streak & XP Champion']\n","\n","Learner Cohort Clustering (K-Means):\n","student_id      name  avg_score  engagement  cohort_cluster              cohort_name\n","      S001 Student 1       87.5          92               1  High-Momentum Achievers\n","      S002 Student 2       81.0          53               2 Steady Foundation Cohort\n","      S003 Student 3       43.0          55               0    Guided Support Cohort\n","      S004 Student 4       93.0          89               1  High-Momentum Achievers\n","      S005 Student 5       68.0          70               1  High-Momentum Achievers\n","      S006 Student 6       57.0          58               0    Guided Support Cohort\n","\n","Comprehensive Report:\n","\n","Personalized Learning Report - Student 1\n","==================================================\n","\n","Learner Profile:\n","  - Student ID: S001\n","  - Learning Style: Visual\n","  - Skill Level: Advanced\n","  - Learning Pace: Fast\n","  - Gamification XP: 300 pts | Badges: First Step Badge, Mastery Star Badge, Streak & XP Champion\n","\n","Learning Analytics:\n","  - Progress: 25.0%\n","  - Average Score: 87.5%\n","  - Completed: 2 / 8 modules\n","  - Engagement Score: 92/100\n","\n","Personalized Learning Path:\n","  Total Steps: 8\n","  Estimated Time: 26 hours\n","\n","  Step 1: Python Basics\n","    Difficulty: 1/3\n","    Duration: 2 hours\n","    Focus: Learn Python fundamentals: variables, loops, functions\n","\n","  Step 2: Data Analysis with Pandas & NumPy\n","    Difficulty: 1/3\n","    Duration: 3 hours\n","    Focus: Data cleaning, DataFrames, filtering, aggregations, and summaries\n","\n","  Step 3: Python Intermediate\n","    Difficulty: 2/3\n","    Duration: 3 hours\n","    Focus: Intermediate Python: OOP, decorators, generators, file handling\n","\n","  Step 4: Python Advanced\n","    Difficulty: 3/3\n","    Duration: 4 hours\n","    Focus: Advanced Python: metaclasses, async, performance optimization\n","\n","  Step 5: Machine Learning Basics\n","    Difficulty: 2/3\n","    Duration: 3 hours\n","    Focus: Supervised and unsupervised learning, train-test split, metrics\n","\n","  Step 6: Natural Language Processing Basics\n","    Difficulty: 2/3\n","    Duration: 3 hours\n","    Focus: Text preprocessing, tokenization, TF-IDF, embeddings\n","\n","  Step 7: Deep Learning Basics\n","    Difficulty: 3/3\n","    Duration: 4 hours\n","    Focus: Neural networks, backpropagation, activation functions, CNNs\n","\n","  Step 8: Machine Learning Advanced\n","    Difficulty: 3/3\n","    Duration: 4 hours\n","    Focus: Ensemble methods, SVM, clustering, hyperparameter tuning\n","\n","Recommended Next Steps:\n","  - Deep Learning Basics (Deep Learning) - Match: 95.0%\n","  - Python Advanced (Programming) - Match: 80.0%\n","  - Machine Learning Advanced (Machine Learning) - Match: 80.0%\n","\n","Tips for Better Learning:\n","  1. Study in short bursts with regular breaks\n","  2. Practice what you learn through projects\n","  3. Review material regularly for retention\n","  4. Join study groups for collaborative learning\n","  5. Set daily learning goals\n","\n","\n","Multiple Student Paths:\n","==================================================\n","\n","Student 2 (S002):\n","  Style: Auditory\n","  Steps: 2\n","  Time: 5 hours\n","\n","Student 3 (S003):\n","  Style: Kinesthetic\n","  Steps: 5\n","  Time: 14 hours\n","\n","Student 4 (S004):\n","  Style: Visual\n","  Steps: 5\n","  Time: 14 hours\n"]}],"source":["# AI Personalized Learning Assistant - Adaptive Learning System\n","# Internship Task ID: AI-LT-002 | Data Alcott Systems\n","\n","import json\n","import os\n","import warnings\n","from datetime import datetime\n","import numpy as np\n","import pandas as pd\n","from sklearn.cluster import KMeans\n","from sklearn.preprocessing import StandardScaler\n","\n","warnings.filterwarnings(\"ignore\")\n","\n","\n","class PersonalizedLearningAssistant:\n","    def __init__(self, data_file=\"learning_assistant_state.json\"):\n","        self.data_file = data_file\n","        self.learning_styles = [\n","            \"Visual\",\n","            \"Auditory\",\n","            \"Kinesthetic\",\n","            \"Reading/Writing\",\n","        ]\n","        self.learning_content = self.load_learning_content()\n","        self.students = self.load_student_data()\n","        self.student_profiles = {}\n","        self.scaler = StandardScaler()\n","        self.kmeans = None\n","        self.load_state_from_json()\n","\n","    def load_learning_content(self):\n","        \"\"\"Load 8+ learning content modules across difficulty levels and learning styles.\"\"\"\n","        return {\n","            \"python_basics\": {\n","                \"title\": \"Python Basics\",\n","                \"category\": \"Programming\",\n","                \"difficulty\": 1,\n","                \"duration\": \"2 hours\",\n","                \"prerequisites\": [],\n","                \"description\": \"Learn Python fundamentals: variables, loops, functions\",\n","                \"learning_style_preference\": \"Visual\",\n","            },\n","            \"python_intermediate\": {\n","                \"title\": \"Python Intermediate\",\n","                \"category\": \"Programming\",\n","                \"difficulty\": 2,\n","                \"duration\": \"3 hours\",\n","                \"prerequisites\": [\"python_basics\"],\n","                \"description\": \"Intermediate Python: OOP, decorators, generators, file handling\",\n","                \"learning_style_preference\": \"Reading/Writing\",\n","            },\n","            \"python_advanced\": {\n","                \"title\": \"Python Advanced\",\n","                \"category\": \"Programming\",\n","                \"difficulty\": 3,\n","                \"duration\": \"4 hours\",\n","                \"prerequisites\": [\"python_intermediate\"],\n","                \"description\": \"Advanced Python: metaclasses, async, performance optimization\",\n","                \"learning_style_preference\": \"Kinesthetic\",\n","            },\n","            \"data_analysis_pandas\": {\n","                \"title\": \"Data Analysis with Pandas & NumPy\",\n","                \"category\": \"Data Science\",\n","                \"difficulty\": 1,\n","                \"duration\": \"3 hours\",\n","                \"prerequisites\": [\"python_basics\"],\n","                \"description\": \"Data cleaning, DataFrames, filtering, aggregations, and summaries\",\n","                \"learning_style_preference\": \"Kinesthetic\",\n","            },\n","            \"ml_basics\": {\n","                \"title\": \"Machine Learning Basics\",\n","                \"category\": \"Machine Learning\",\n","                \"difficulty\": 2,\n","                \"duration\": \"3 hours\",\n","                \"prerequisites\": [\"python_intermediate\", \"data_analysis_pandas\"],\n","                \"description\": \"Supervised and unsupervised learning, train-test split, metrics\",\n","                \"learning_style_preference\": \"Auditory\",\n","            },\n","            \"ml_advanced\": {\n","                \"title\": \"Machine Learning Advanced\",\n","                \"category\": \"Machine Learning\",\n","                \"difficulty\": 3,\n","                \"duration\": \"4 hours\",\n","                \"prerequisites\": [\"ml_basics\"],\n","                \"description\": \"Ensemble methods, SVM, clustering, hyperparameter tuning\",\n","                \"learning_style_preference\": \"Reading/Writing\",\n","            },\n","            \"dl_basics\": {\n","                \"title\": \"Deep Learning Basics\",\n","                \"category\": \"Deep Learning\",\n","                \"difficulty\": 3,\n","                \"duration\": \"4 hours\",\n","                \"prerequisites\": [\"ml_basics\"],\n","                \"description\": \"Neural networks, backpropagation, activation functions, CNNs\",\n","                \"learning_style_preference\": \"Visual\",\n","            },\n","            \"nlp_basics\": {\n","                \"title\": \"Natural Language Processing Basics\",\n","                \"category\": \"NLP\",\n","                \"difficulty\": 2,\n","                \"duration\": \"3 hours\",\n","                \"prerequisites\": [\"ml_basics\"],\n","                \"description\": \"Text preprocessing, tokenization, TF-IDF, embeddings\",\n","                \"learning_style_preference\": \"Auditory\",\n","            },\n","        }\n","\n","    def load_student_data(self):\n","        \"\"\"Load sample student dataset as a Pandas DataFrame.\"\"\"\n","        np.random.seed(42)\n","        n = 20\n","        data = {\n","            \"student_id\": [f\"S{i+1:03d}\" for i in range(n)],\n","            \"name\": [f\"Student {i+1}\" for i in range(n)],\n","            \"learning_style\": np.random.choice(self.learning_styles, n),\n","            \"skill_level\": np.random.choice(\n","                [\"Beginner\", \"Intermediate\", \"Advanced\"], n\n","            ),\n","            \"learning_pace\": np.random.choice([\"Slow\", \"Medium\", \"Fast\"], n),\n","            \"completed_courses\": np.random.randint(0, 8, n),\n","            \"avg_score\": np.random.randint(40, 95, n),\n","            \"engagement\": np.random.randint(30, 100, n),\n","        }\n","        return pd.DataFrame(data)\n","\n","    def _get_student_row(self, student_id):\n","        matches = self.students[self.students[\"student_id\"] == student_id]\n","        if len(matches) == 0:\n","            return None\n","        return matches.index[0], matches.iloc[0]\n","\n","    def detect_learning_style(self, student_id):\n","        \"\"\"Detect or refine a student's learning style based on performance and engagement.\"\"\"\n","        found = self._get_student_row(student_id)\n","        if found is None:\n","            return \"Student not found\"\n","\n","        _, student = found\n","        avg_score = student[\"avg_score\"]\n","        engagement = student[\"engagement\"]\n","        pace = student[\"learning_pace\"]\n","\n","        if avg_score > 80 and engagement > 70:\n","            style = \"Visual\"\n","        elif avg_score > 70 and engagement > 60:\n","            style = \"Reading/Writing\"\n","        elif pace == \"Fast\" and engagement > 50:\n","            style = \"Kinesthetic\"\n","        else:\n","            style = \"Auditory\"\n","\n","        return style\n","\n","    def cluster_learners(self, n_clusters=3):\n","        \"\"\"Use Scikit-learn StandardScaler and KMeans to group learners into cohorts.\"\"\"\n","        features = self.students[\n","            [\"completed_courses\", \"avg_score\", \"engagement\"]\n","        ].copy()\n","        scaled_features = self.scaler.fit_transform(features)\n","        self.kmeans = KMeans(n_clusters=n_clusters, random_state=42, n_init=10)\n","        self.students[\"cohort_cluster\"] = self.kmeans.fit_predict(scaled_features)\n","\n","        cohort_labels = {\n","            0: \"Steady Foundation Cohort\",\n","            1: \"High-Momentum Achievers\",\n","            2: \"Guided Support Cohort\",\n","        }\n","        # Rank clusters by mean avg_score so labels stay meaningful\n","        order = (\n","            self.students.groupby(\"cohort_cluster\")[\"avg_score\"]\n","            .mean()\n","            .sort_values()\n","            .index.tolist()\n","        )\n","        ranked_names = [\n","            \"Guided Support Cohort\",\n","            \"Steady Foundation Cohort\",\n","            \"High-Momentum Achievers\",\n","        ]\n","        mapping = {\n","            cluster_id: ranked_names[idx] for idx, cluster_id in enumerate(order)\n","        }\n","        self.students[\"cohort_name\"] = self.students[\"cohort_cluster\"].map(mapping)\n","        return self.students[\n","            [\n","                \"student_id\",\n","                \"name\",\n","                \"avg_score\",\n","                \"engagement\",\n","                \"cohort_cluster\",\n","                \"cohort_name\",\n","            ]\n","        ]\n","\n","    def create_personalized_path(self, student_id):\n","        \"\"\"Create a prerequisite-aware, difficulty-ordered learning path for a student.\"\"\"\n","        found = self._get_student_row(student_id)\n","        if found is None:\n","            return \"Student not found\"\n","\n","        _, student = found\n","        style = self.detect_learning_style(student_id)\n","        skill_level = student[\"skill_level\"]\n","\n","        if skill_level == \"Beginner\":\n","            max_diff = 1\n","        elif skill_level == \"Intermediate\":\n","            max_diff = 2\n","        else:\n","            max_diff = 3\n","\n","        available_content = [\n","            (key, content)\n","            for key, content in self.learning_content.items()\n","            if content[\"difficulty\"] <= max_diff\n","        ]\n","        available_content.sort(\n","            key=lambda x: (\n","                x[1][\"difficulty\"],\n","                0 if x[1][\"learning_style_preference\"] == style else 1,\n","                x[0],\n","            )\n","        )\n","\n","        path = []\n","        completed = set(\n","            self.student_profiles.get(student_id, {}).get(\"completed_content\", [])\n","        )\n","        # Allow prerequisites within available pool to unlock in order\n","        pending_pool = list(available_content)\n","        progress_made = True\n","\n","        while pending_pool and progress_made:\n","            progress_made = False\n","            remaining = []\n","            for content_id, content in pending_pool:\n","                prereqs = content[\"prerequisites\"]\n","                if all(p in completed for p in prereqs):\n","                    path.append(\n","                        {\n","                            \"step\": len(path) + 1,\n","                            \"content_id\": content_id,\n","                            \"title\": content[\"title\"],\n","                            \"category\": content[\"category\"],\n","                            \"difficulty\": content[\"difficulty\"],\n","                            \"duration\": content[\"duration\"],\n","                            \"description\": content[\"description\"],\n","                            \"style_match\": content[\"learning_style_preference\"]\n","                            == style,\n","                        }\n","                    )\n","                    completed.add(content_id)\n","                    progress_made = True\n","                else:\n","                    remaining.append((content_id, content))\n","            pending_pool = remaining\n","\n","        total_hours = sum(\n","            int(str(item[\"duration\"]).split()[0]) for item in path\n","        )\n","\n","        return {\n","            \"student_id\": student_id,\n","            \"student_name\": student[\"name\"],\n","            \"learning_style\": style,\n","            \"skill_level\": skill_level,\n","            \"learning_pace\": student[\"learning_pace\"],\n","            \"total_steps\": len(path),\n","            \"path\": path,\n","            \"estimated_time\": f\"{total_hours} hours\",\n","        }\n","\n","    def recommend_content(self, student_id, topic=None):\n","        \"\"\"Recommend learning modules using style alignment, difficulty fit, and similarity.\"\"\"\n","        found = self._get_student_row(student_id)\n","        if found is None:\n","            return \"Student not found\"\n","\n","        _, student = found\n","        style = self.detect_learning_style(student_id)\n","        skill_level = student[\"skill_level\"]\n","        target_diff = {\"Beginner\": 1, \"Intermediate\": 2, \"Advanced\": 3}.get(\n","            skill_level, 2\n","        )\n","\n","        recommended = []\n","        for key, content in self.learning_content.items():\n","            if topic is not None and content[\"category\"].lower() != topic.lower():\n","                continue\n","\n","            style_bonus = 0.15 if content[\"learning_style_preference\"] == style else 0.0\n","            diff_diff = abs(content[\"difficulty\"] - target_diff)\n","            diff_score = max(0.0, 0.20 - (diff_diff * 0.08))\n","            base_score = 0.60 + style_bonus + diff_score\n","            match_score = round(min(0.98, max(0.55, base_score)), 4)\n","\n","            recommended.append(\n","                {\n","                    \"content_id\": key,\n","                    \"title\": content[\"title\"],\n","                    \"category\": content[\"category\"],\n","                    \"difficulty\": content[\"difficulty\"],\n","                    \"duration\": content[\"duration\"],\n","                    \"description\": content[\"description\"],\n","                    \"match_score\": match_score,\n","                }\n","            )\n","\n","        return sorted(recommended, key=lambda x: x[\"match_score\"], reverse=True)[:5]\n","\n","    def _compute_badges(self, profile):\n","        badges = []\n","        count = len(profile[\"completed_content\"])\n","        scores = profile[\"scores\"]\n","        avg_score = float(np.mean(scores)) if scores else 0.0\n","\n","        if count >= 1:\n","            badges.append(\"First Step Badge\")\n","        if count >= 3:\n","            badges.append(\"Consistent Learner Badge\")\n","        if avg_score >= 85 and len(scores) >= 2:\n","            badges.append(\"Mastery Star Badge\")\n","        if profile[\"points\"] >= 250:\n","            badges.append(\"Streak & XP Champion\")\n","        return badges\n","\n","    def track_progress(self, student_id, content_id, score):\n","        \"\"\"Track student progress, apply real-time adaptation, and award gamification XP.\"\"\"\n","        found = self._get_student_row(student_id)\n","        if found is None:\n","            return \"Student not found\"\n","        if content_id not in self.learning_content:\n","            return f\"Content '{content_id}' not found\"\n","\n","        row_idx, student = found\n","\n","        if student_id not in self.student_profiles:\n","            self.student_profiles[student_id] = {\n","                \"completed_content\": [],\n","                \"scores\": [],\n","                \"progress\": 0.0,\n","                \"points\": 0,\n","                \"badges\": [],\n","                \"adaptation_log\": [],\n","            }\n","\n","        profile = self.student_profiles[student_id]\n","        if content_id not in profile[\"completed_content\"]:\n","            profile[\"completed_content\"].append(content_id)\n","        profile[\"scores\"].append(score)\n","        profile[\"progress\"] = (\n","            len(profile[\"completed_content\"]) / len(self.learning_content)\n","        ) * 100.0\n","\n","        # Gamification: base XP + bonus for high scores\n","        xp_earned = 100 + (50 if score >= 85 else 20 if score >= 60 else 0)\n","        profile[\"points\"] += xp_earned\n","        profile[\"badges\"] = self._compute_badges(profile)\n","\n","        # Real-time adaptation: update student DataFrame metrics & skill/pace\n","        new_avg = float(np.mean(profile[\"scores\"]))\n","        self.students.at[row_idx, \"avg_score\"] = round(new_avg, 1)\n","        self.students.at[row_idx, \"completed_courses\"] = len(\n","            profile[\"completed_content\"]\n","        )\n","        new_engagement = min(100, int(student[\"engagement\"]) + (5 if score >= 75 else 2))\n","        self.students.at[row_idx, \"engagement\"] = new_engagement\n","\n","        adaptation_msg = \"Maintained current difficulty & pace\"\n","        current_skill = self.students.at[row_idx, \"skill_level\"]\n","        if score >= 88 and len(profile[\"scores\"]) >= 2 and new_avg >= 85:\n","            if current_skill == \"Beginner\":\n","                self.students.at[row_idx, \"skill_level\"] = \"Intermediate\"\n","                adaptation_msg = \"Level Up: Promoted from Beginner to Intermediate\"\n","            elif current_skill == \"Intermediate\":\n","                self.students.at[row_idx, \"skill_level\"] = \"Advanced\"\n","                adaptation_msg = \"Level Up: Promoted from Intermediate to Advanced\"\n","            self.students.at[row_idx, \"learning_pace\"] = \"Fast\"\n","        elif score < 55:\n","            self.students.at[row_idx, \"learning_pace\"] = \"Slow\"\n","            adaptation_msg = \"Support Mode: Pace adjusted to Slow for foundational reinforcement\"\n","\n","        profile[\"adaptation_log\"].append(\n","            {\n","                \"timestamp\": datetime.now().strftime(\"%Y-%m-%d %H:%M:%S\"),\n","                \"content_id\": content_id,\n","                \"score\": score,\n","                \"xp_earned\": xp_earned,\n","                \"adaptation\": adaptation_msg,\n","            }\n","        )\n","\n","        self.save_state_to_json()\n","        return profile\n","\n","    def get_analytics(self, student_id):\n","        \"\"\"Get learning analytics, gamification stats, and cohort info for a student.\"\"\"\n","        found = self._get_student_row(student_id)\n","        if found is None:\n","            return \"Student not found\"\n","\n","        _, student = found\n","        profile = self.student_profiles.get(student_id, {})\n","        scores = profile.get(\"scores\", [])\n","\n","        return {\n","            \"student_id\": student_id,\n","            \"name\": student[\"name\"],\n","            \"learning_style\": self.detect_learning_style(student_id),\n","            \"skill_level\": student[\"skill_level\"],\n","            \"average_score\": float(np.mean(scores))\n","            if scores\n","            else float(student[\"avg_score\"]),\n","            \"progress\": float(profile.get(\"progress\", 0.0)),\n","            \"completed_count\": len(profile.get(\"completed_content\", [])),\n","            \"engagement_score\": int(student[\"engagement\"]),\n","            \"learning_pace\": student[\"learning_pace\"],\n","            \"points\": int(profile.get(\"points\", 0)),\n","            \"badges\": profile.get(\"badges\", []),\n","        }\n","\n","    def generate_report(self, student_id):\n","        \"\"\"Generate comprehensive personalized learning report.\"\"\"\n","        path = self.create_personalized_path(student_id)\n","        if isinstance(path, str):\n","            return path\n","\n","        analytics = self.get_analytics(student_id)\n","        recommendations = self.recommend_content(student_id)\n","        badges_str = \", \".join(analytics[\"badges\"]) if analytics[\"badges\"] else \"None yet\"\n","\n","        report = f\"\"\"\n","Personalized Learning Report - {path['student_name']}\n","{'=' * 50}\n","\n","Learner Profile:\n","  - Student ID: {student_id}\n","  - Learning Style: {path['learning_style']}\n","  - Skill Level: {path['skill_level']}\n","  - Learning Pace: {path['learning_pace']}\n","  - Gamification XP: {analytics['points']} pts | Badges: {badges_str}\n","\n","Learning Analytics:\n","  - Progress: {analytics['progress']:.1f}%\n","  - Average Score: {analytics['average_score']:.1f}%\n","  - Completed: {analytics['completed_count']} / {len(self.learning_content)} modules\n","  - Engagement Score: {analytics['engagement_score']}/100\n","\n","Personalized Learning Path:\n","  Total Steps: {path['total_steps']}\n","  Estimated Time: {path['estimated_time']}\n","\"\"\"\n","        for step in path[\"path\"]:\n","            report += f\"\"\"\n","  Step {step['step']}: {step['title']}\n","    Difficulty: {step['difficulty']}/3\n","    Duration: {step['duration']}\n","    Focus: {step['description']}\n","\"\"\"\n","\n","        report += \"\\nRecommended Next Steps:\\n\"\n","        for rec in recommendations[:3]:\n","            report += f\"  - {rec['title']} ({rec['category']}) - Match: {rec['match_score'] * 100:.1f}%\\n\"\n","\n","        report += \"\"\"\n","Tips for Better Learning:\n","  1. Study in short bursts with regular breaks\n","  2. Practice what you learn through projects\n","  3. Review material regularly for retention\n","  4. Join study groups for collaborative learning\n","  5. Set daily learning goals\n","\"\"\"\n","        return report\n","\n","    def save_state_to_json(self):\n","        \"\"\"Persist student profiles and updated student metrics to a JSON file.\"\"\"\n","        payload = {\n","            \"last_updated\": datetime.now().strftime(\"%Y-%m-%d %H:%M:%S\"),\n","            \"student_profiles\": self.student_profiles,\n","            \"students_snapshot\": self.students.to_dict(orient=\"records\"),\n","        }\n","        with open(self.data_file, \"w\", encoding=\"utf-8\") as f:\n","            json.dump(payload, f, indent=2)\n","\n","    def load_state_from_json(self):\n","        \"\"\"Load persisted state from JSON file if it exists.\"\"\"\n","        if not os.path.exists(self.data_file):\n","            return\n","        try:\n","            with open(self.data_file, \"r\", encoding=\"utf-8\") as f:\n","                payload = json.load(f)\n","            self.student_profiles = payload.get(\"student_profiles\", {})\n","            snapshot = payload.get(\"students_snapshot\")\n","            if snapshot:\n","                self.students = pd.DataFrame(snapshot)\n","        except (json.JSONDecodeError, OSError):\n","            pass\n","\n","\n","if __name__ == \"__main__\":\n","    assistant = PersonalizedLearningAssistant()\n","\n","    print(\"Creating Personalized Learning Path for S001...\")\n","    print(\"=\" * 50)\n","    path = assistant.create_personalized_path(\"S001\")\n","    print(f\"Student: {path['student_name']}\")\n","    print(f\"Learning Style: {path['learning_style']}\")\n","    print(f\"Skill Level: {path['skill_level']}\")\n","    print(f\"Estimated Time: {path['estimated_time']}\")\n","\n","    print(\"\\nLearning Path:\")\n","    for step in path[\"path\"]:\n","        print(\n","            f\"  {step['step']}. {step['title']} (Difficulty: {step['difficulty']}, Duration: {step['duration']})\"\n","        )\n","\n","    print(\"\\nContent Recommendations:\")\n","    print(\"=\" * 40)\n","    recommendations = assistant.recommend_content(\"S001\")\n","    for rec in recommendations:\n","        print(\n","            f\"  - {rec['title']} ({rec['category']}) - {rec['match_score'] * 100:.1f}% match\"\n","        )\n","\n","    print(\"\\nTracking Progress & Real-Time Adaptation...\")\n","    assistant.track_progress(\"S001\", \"python_basics\", 85)\n","    assistant.track_progress(\"S001\", \"data_analysis_pandas\", 90)\n","    analytics = assistant.get_analytics(\"S001\")\n","    print(f\"Progress: {analytics['progress']:.1f}%\")\n","    print(f\"Average Score: {analytics['average_score']:.1f}%\")\n","    print(f\"Points & Badges: {analytics['points']} XP | {analytics['badges']}\")\n","\n","    print(\"\\nLearner Cohort Clustering (K-Means):\")\n","    print(assistant.cluster_learners(n_clusters=3).head(6).to_string(index=False))\n","\n","    print(\"\\nComprehensive Report:\")\n","    print(assistant.generate_report(\"S001\"))\n","\n","    print(\"\\nMultiple Student Paths:\")\n","    print(\"=\" * 50)\n","    for sid in [\"S002\", \"S003\", \"S004\"]:\n","        s_row = assistant.students[assistant.students[\"student_id\"] == sid].iloc[0]\n","        s_path = assistant.create_personalized_path(sid)\n","        print(f\"\\n{s_row['name']} ({sid}):\")\n","        print(f\"  Style: {s_path['learning_style']}\")\n","        print(f\"  Steps: {s_path['total_steps']}\")\n","        print(f\"  Time: {s_path['estimated_time']}\")"]}]}
+import json
+import os
+from datetime import datetime
+import numpy as np
+import pandas as pd
+from sklearn.cluster import KMeans
+from sklearn.preprocessing import StandardScaler
+
+
+class PersonalizedLearningAssistant:
+    """AI-powered Personalized Learning Assistant for adaptive paths,
+    recommendations, progress gamification, and learner clustering."""
+
+    def __init__(self, state_file="learning_assistant_state.json"):
+        self.state_file = state_file
+        self.modules = self._build_modules()
+        self.student_profiles = {}
+        self.students_df = self._create_sample_students(n=20)
+        self._initialize_profiles()
+        self.load_state()
+
+    def _build_modules(self):
+        return [
+            {
+                "id": "M1",
+                "title": "Python & Data Foundations",
+                "topic": "python",
+                "level": "Beginner",
+                "duration_hrs": 4.0,
+                "prereq": None,
+                "points": 100,
+            },
+            {
+                "id": "M2",
+                "title": "NumPy & Pandas Data Wrangling",
+                "topic": "data_science",
+                "level": "Beginner",
+                "duration_hrs": 5.0,
+                "prereq": "M1",
+                "points": 120,
+            },
+            {
+                "id": "M3",
+                "title": "Data Visualization & EDA",
+                "topic": "data_science",
+                "level": "Intermediate",
+                "duration_hrs": 4.5,
+                "prereq": "M2",
+                "points": 130,
+            },
+            {
+                "id": "M4",
+                "title": "Supervised ML & Regression",
+                "topic": "machine_learning",
+                "level": "Intermediate",
+                "duration_hrs": 6.0,
+                "prereq": "M2",
+                "points": 160,
+            },
+            {
+                "id": "M5",
+                "title": "Classification & Model Evaluation",
+                "topic": "machine_learning",
+                "level": "Intermediate",
+                "duration_hrs": 6.0,
+                "prereq": "M4",
+                "points": 170,
+            },
+            {
+                "id": "M6",
+                "title": "Clustering & Unsupervised Learning",
+                "topic": "machine_learning",
+                "level": "Advanced",
+                "duration_hrs": 5.5,
+                "prereq": "M3",
+                "points": 180,
+            },
+            {
+                "id": "M7",
+                "title": "Intro to Neural Networks",
+                "topic": "deep_learning",
+                "level": "Advanced",
+                "duration_hrs": 7.0,
+                "prereq": "M5",
+                "points": 200,
+            },
+            {
+                "id": "M8",
+                "title": "End-to-End AI Capstone Project",
+                "topic": "capstone",
+                "level": "Advanced",
+                "duration_hrs": 8.0,
+                "prereq": "M6",
+                "points": 250,
+            },
+        ]
+
+    def _create_sample_students(self, n=20, seed=42):
+        rng = np.random.default_rng(seed)
+        topics = ["python", "data_science", "machine_learning", "deep_learning"]
+        styles = ["visual", "hands_on", "reading"]
+
+        rows = []
+        for i in range(1, n + 1):
+            sid = f"S{i:03d}"
+            quiz_avg = round(float(rng.uniform(45, 96)), 1)
+            study_hrs = round(float(rng.uniform(3.0, 22.0)), 1)
+            completion_rate = round(float(rng.uniform(0.15, 0.95)), 2)
+            streak_days = int(rng.integers(1, 25))
+            interest = str(rng.choice(topics))
+            style = str(rng.choice(styles))
+            rows.append(
+                {
+                    "student_id": sid,
+                    "name": f"Learner_{i:02d}",
+                    "quiz_avg": quiz_avg,
+                    "weekly_study_hrs": study_hrs,
+                    "completion_rate": completion_rate,
+                    "streak_days": streak_days,
+                    "interest_topic": interest,
+                    "learning_style": style,
+                }
+            )
+        return pd.DataFrame(rows)
+
+    def _initialize_profiles(self):
+        for _, row in self.students_df.iterrows():
+            sid = row["student_id"]
+            completed = ["M1"] if row["completion_rate"] >= 0.25 else []
+            if row["completion_rate"] >= 0.50:
+                completed.append("M2")
+            if row["completion_rate"] >= 0.75:
+                completed.append("M4")
+
+            points = len(completed) * 120 + int(row["streak_days"] * 10)
+            badges = []
+            if row["streak_days"] >= 7:
+                badges.append("7-Day Streak")
+            if row["quiz_avg"] >= 85:
+                badges.append("Quiz Ace")
+            if len(completed) >= 2:
+                badges.append("Fast Starter")
+
+            self.student_profiles[sid] = {
+                "student_id": sid,
+                "name": row["name"],
+                "quiz_avg": float(row["quiz_avg"]),
+                "weekly_study_hrs": float(row["weekly_study_hrs"]),
+                "completion_rate": float(row["completion_rate"]),
+                "streak_days": int(row["streak_days"]),
+                "interest_topic": row["interest_topic"],
+                "learning_style": row["learning_style"],
+                "completed_modules": completed,
+                "points": int(points),
+                "badges": badges,
+            }
+
+    def generate_learning_path(self, student_id):
+        profile = self.student_profiles.get(student_id)
+        if not profile:
+            raise ValueError(f"Unknown student_id: {student_id}")
+
+        completed_set = set(profile["completed_modules"])
+        path = []
+        for mod in self.modules:
+            if mod["id"] in completed_set:
+                continue
+            prereq = mod["prereq"]
+            prereq_met = (prereq is None) or (prereq in completed_set)
+            if prereq_met:
+                path.append(mod)
+        return path
+
+    def recommend_content(self, student_id, top_n=3):
+        profile = self.student_profiles.get(student_id)
+        if not profile:
+            raise ValueError(f"Unknown student_id: {student_id}")
+
+        completed_set = set(profile["completed_modules"])
+        interest = profile["interest_topic"]
+        quiz_avg = profile["quiz_avg"]
+
+        scored = []
+        for mod in self.modules:
+            if mod["id"] in completed_set:
+                continue
+
+            prereq = mod["prereq"]
+            if prereq is not None and prereq not in completed_set:
+                continue
+
+            score = 50.0
+            if mod["topic"] == interest:
+                score += 25.0
+
+            if quiz_avg < 65 and mod["level"] == "Beginner":
+                score += 20.0
+            elif 65 <= quiz_avg < 82 and mod["level"] in ("Beginner", "Intermediate"):
+                score += 15.0
+            elif quiz_avg >= 82 and mod["level"] in ("Intermediate", "Advanced"):
+                score += 20.0
+
+            score += mod["points"] * 0.05
+            scored.append((round(score, 2), mod))
+
+        scored.sort(key=lambda x: x[0], reverse=True)
+        return [{"score": s, **m} for s, m in scored[:top_n]]
+
+    def record_progress(self, student_id, module_id, quiz_score):
+        profile = self.student_profiles.get(student_id)
+        if not profile:
+            raise ValueError(f"Unknown student_id: {student_id}")
+
+        mod = next((m for m in self.modules if m["id"] == module_id), None)
+        if not mod:
+            raise ValueError(f"Unknown module_id: {module_id}")
+
+        if module_id not in profile["completed_modules"]:
+            profile["completed_modules"].append(module_id)
+            profile["points"] += mod["points"]
+
+        if quiz_score >= 80:
+            profile["streak_days"] += 1
+            profile["points"] += 25
+
+        old_avg = profile["quiz_avg"]
+        profile["quiz_avg"] = round((old_avg + float(quiz_score)) / 2.0, 1)
+        profile["completion_rate"] = round(
+            len(profile["completed_modules"]) / len(self.modules), 2
+        )
+
+        if profile["streak_days"] >= 7 and "7-Day Streak" not in profile["badges"]:
+            profile["badges"].append("7-Day Streak")
+        if profile["quiz_avg"] >= 85 and "Quiz Ace" not in profile["badges"]:
+            profile["badges"].append("Quiz Ace")
+        if len(profile["completed_modules"]) >= 3 and "Module Explorer" not in profile["badges"]:
+            profile["badges"].append("Module Explorer")
+
+        self._sync_dataframe_row(student_id)
+        return profile
+
+    def _sync_dataframe_row(self, student_id):
+        p = self.student_profiles[student_id]
+        mask = self.students_df["student_id"] == student_id
+        if mask.any():
+            self.students_df.loc[mask, "quiz_avg"] = p["quiz_avg"]
+            self.students_df.loc[mask, "completion_rate"] = p["completion_rate"]
+            self.students_df.loc[mask, "streak_days"] = p["streak_days"]
+
+    def cluster_learners(self, n_clusters=3):
+        features = ["quiz_avg", "weekly_study_hrs", "completion_rate", "streak_days"]
+        scaler = StandardScaler()
+        scaled = scaler.fit_transform(self.students_df[features])
+
+        model = KMeans(n_clusters=n_clusters, random_state=42, n_init=10)
+        labels = model.fit_predict(scaled)
+
+        clustered_df = self.students_df.copy()
+        clustered_df["cluster"] = labels
+        return clustered_df
+
+    def generate_report(self, student_id):
+        profile = self.student_profiles.get(student_id)
+        if not profile:
+            raise ValueError(f"Unknown student_id: {student_id}")
+
+        next_path = self.generate_learning_path(student_id)
+        recs = self.recommend_content(student_id, top_n=3)
+
+        lines = [
+            f"=== Learner Report: {profile['name']} ({student_id}) ===",
+            f"Interest Topic : {profile['interest_topic']} | Style: {profile['learning_style']}",
+            f"Quiz Average   : {profile['quiz_avg']}% | Completion Rate: {profile['completion_rate'] * 100:.0f}%",
+            f"Study / Week   : {profile['weekly_study_hrs']} hrs | Streak: {profile['streak_days']} days",
+            f"Points & Badges: {profile['points']} pts | Badges: {', '.join(profile['badges']) or 'None'}",
+            f"Completed Mods : {', '.join(profile['completed_modules']) or 'None'}",
+            "Available Next Modules:",
+        ]
+        for m in next_path:
+            lines.append(f"  - [{m['id']}] {m['title']} ({m['level']}, {m['duration_hrs']}h, +{m['points']} pts)")
+
+        lines.append("Top Recommended Content:")
+        for r in recs:
+            lines.append(f"  - [{r['id']}] {r['title']} (Score: {r['score']}, Topic: {r['topic']})")
+
+        return "\n".join(lines)
+
+    def save_state(self):
+        payload = {
+            "last_updated": datetime.now().isoformat(),
+            "student_profiles": self.student_profiles,
+        }
+        with open(self.state_file, "w", encoding="utf-8") as f:
+            json.dump(payload, f, indent=2)
+        return self.state_file
+
+    def load_state(self):
+        if not os.path.exists(self.state_file):
+            return False
+        try:
+            with open(self.state_file, "r", encoding="utf-8") as f:
+                data = json.load(f)
+            saved_profiles = data.get("student_profiles", {})
+            for sid, prof in saved_profiles.items():
+                if sid in self.student_profiles:
+                    self.student_profiles[sid].update(prof)
+                    self._sync_dataframe_row(sid)
+            return True
+        except (json.JSONDecodeError, OSError):
+            return False
+
+
+def main():
+    assistant = PersonalizedLearningAssistant(state_file="learning_assistant_state.json")
+
+    print("--- Sample Learners (Top 6) ---")
+    print(assistant.students_df.head(6).to_string(index=False))
+
+    print("\n--- Learner Clustering (K-Means) ---")
+    clustered = assistant.cluster_learners(n_clusters=3)
+    summary = clustered.groupby("cluster")[
+        ["quiz_avg", "weekly_study_hrs", "completion_rate", "streak_days"]
+    ].mean().round(2)
+    print(summary.to_string())
+
+    for sid in ["S001", "S002", "S003", "S004"]:
+        print("\n" + assistant.generate_report(sid))
+
+    print("\n--- Recording Progress for S001 on M2 ---")
+    updated = assistant.record_progress("S001", "M2", quiz_score=90)
+    print(
+        f"S001 Updated -> Points: {updated['points']}, "
+        f"Streak: {updated['streak_days']}, Quiz Avg: {updated['quiz_avg']}"
+    )
+
+    saved_path = assistant.save_state()
+    print(f"\nState saved successfully to: {saved_path}")
+
+
+if __name__ == "__main__":
+    main()
